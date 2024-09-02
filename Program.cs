@@ -21,6 +21,7 @@ namespace PetShopTrue
                 Console.WriteLine("Press '2' to add a cat food");
                 Console.WriteLine("Press '3' to retrieve a product");
                 Console.WriteLine("Press '4' to view in stock products");
+                Console.WriteLine("Press '5' to get total price");
                 Console.WriteLine("Type 'exit' to quit");
                 userInput = Console.ReadLine()!.ToLower();
                 switch (userInput)
@@ -170,6 +171,14 @@ namespace PetShopTrue
                             }
                         }
                         break;
+
+                    case "5":
+                        decimal totalPriceOfInventory = productLogic.GetTotalPriceOfInventory();
+                        Console.WriteLine($"Total Price of Inventory: {totalPriceOfInventory:C}");
+                        Console.WriteLine();
+                        Console.WriteLine("Press enter to continue...");
+                        Console.ReadLine();
+                        continue;
 
                     case "exit":
                         Environment.Exit(0);

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Metadata.Ecma335;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -98,8 +99,26 @@ namespace PetShopTrue
         public List<string> GetOnlyInStockProducts()
         {
             return _products
-                .Where(x => x.Quantity > 0)
+                .InStock()
                 .Select(x => x.Name)
+                .ToList();
+        }
+
+        public decimal GetTotalPriceOfInventory()
+        {
+            return _products
+                .InStock()
+                .Select(x => x.Price * x.Quantity)
+                .Sum();
+        }
+    }
+
+    static class ListExtensions
+    {
+        public static List<T> InStock<T>(this List<T> list) where T : Product
+        {
+            return list
+                .Where(x => x.Quantity > 0)
                 .ToList();
         }
     }
