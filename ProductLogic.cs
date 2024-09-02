@@ -11,21 +11,21 @@ namespace PetShopTrue
     internal class ProductLogic : IProductLogic
     {
         private List<Product> _products;
-        private Dictionary<string, DogLeash> _dogLeash;
-        private Dictionary<string, CatFood> _catFood;
+        private Dictionary<string, DogLeash> _dogLeashes;
+        private Dictionary<string, CatFood> _catFoods;
 
         public ProductLogic()
         {
             _products = new List<Product>
             {
-                new DogLeash 
+                new DogLeash
                 {
                     Name = "Happy Leash",
                     Price = 9.99m,
                     Description = "Fun for you and your dog!",
                     LengthInches = 60,
                     Material = "Leather",
-                    Quantity = 1                       
+                    Quantity = 1
                 },
                 new CatFood
                 {
@@ -47,79 +47,50 @@ namespace PetShopTrue
                 }
             };
 
-            _dogLeash = new Dictionary<string, DogLeash>();
-            _catFood = new Dictionary<string, CatFood>();
+            _dogLeashes = new Dictionary<string, DogLeash>();
+            _catFoods = new Dictionary<string, CatFood>();
         }
 
         public void AddProduct(Product product)
         {
             _products.Add(product);
-            
-            if (product is DogLeash dogLeash)
+
+            switch (product)
             {
-                _dogLeash.Add(dogLeash.Name, dogLeash);
-            }
-            else if (product is CatFood catFood)
-            {
-                _catFood.Add(catFood.Name, catFood);
+                case DogLeash dogLeash:
+                    _dogLeashes[dogLeash.Name] = dogLeash;
+                    break;
+
+                case CatFood catFood:
+                    _catFoods[catFood.Name] = catFood;
+                    break;
             }
         }
 
-        public List<Product> GetAllProducts()
-        {
-            return _products;
-        }
+        public List<Product> GetAllProducts() => _products;
 
-        public DogLeash GetDogLeashByName(string name)
-        {
-            try
-            {
-                _dogLeash.ContainsKey(name);
-                return _dogLeash[name];
-            }
-            catch (Exception ex)
-            {
-                return null!;
-            }
-        }
+        public DogLeash GetDogLeashByName(string name) => _dogLeashes
+            .TryGetValue(name, out var dogLeash) 
+            ? dogLeash : null!;
 
-        public CatFood GetCatFoodByName(string name)
-        {
-            try
-            {
-                _catFood.ContainsKey(name);
-                return _catFood[name];
-            }
-            catch (Exception ex)
-            {
-                return null!;
-            }
-        }
+        public CatFood GetCatFoodByName(string name) => _catFoods
+            .TryGetValue(name, out var catFood) 
+            ? catFood : null!;
 
-        public List<string> GetOnlyInStockProducts()
-        {
-            return _products
-                .InStock()
-                .Select(x => x.Name)
-                .ToList();
-        }
+        public List<string> GetOnlyInStockProducts() => _products
+            .InStock()
+            .Select(p => p.Name)
+            .ToList();
 
-        public decimal GetTotalPriceOfInventory()
-        {
-            return _products
-                .InStock()
-                .Select(x => x.Price * x.Quantity)
-                .Sum();
-        }
+        public decimal GetTotalPriceOfInventory() => _products
+            .InStock()
+            .Sum(p => p.Price * p.Quantity);
     }
 
     static class ListExtensions
     {
-        public static List<T> InStock<T>(this List<T> list) where T : Product
-        {
-            return list
-                .Where(x => x.Quantity > 0)
+        public static List<T> InStock<T>(this List<T> list) where T : Product => list
+                .Where(p => p.Quantity > 0)
                 .ToList();
-        }
     }
 }

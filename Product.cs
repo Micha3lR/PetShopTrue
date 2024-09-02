@@ -6,11 +6,14 @@ using System.Threading.Tasks;
 
 namespace PetShopTrue
 {
+    /// <summary>
+    /// Represents product with basic details
+    /// </summary>
     internal class Product
     {
-        public string Name { get; set; }
+        public String Name { get; set; }
         public decimal Price { get; set; }
         public int Quantity { get; set; }
-        public string Description { get; set; }
+        public String Description { get; set; }
     }
 }

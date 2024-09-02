@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace PetShopTrue
 {
+    /// <summary>
+    /// Represents cat food with specific parameters
+    /// </summary>
     internal class CatFood : Product
     {
         public double WeightPounds { get; set; }

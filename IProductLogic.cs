@@ -6,18 +6,21 @@ using System.Threading.Tasks;
 
 namespace PetShopTrue
 {
+    /// <summary>
+    /// Defines operations for managing products
+    /// </summary>
     internal interface IProductLogic
     {
-        public void AddProduct(Product product);
+        void AddProduct(Product product);
 
-        public List<Product> GetAllProducts();
+        List<Product> GetAllProducts();
 
-        public DogLeash GetDogLeashByName(string name);
+        DogLeash GetDogLeashByName(string name);
 
-        public CatFood GetCatFoodByName(string name);
+        CatFood GetCatFoodByName(string name);
 
-        public List<string> GetOnlyInStockProducts();
+        List<string> GetOnlyInStockProducts();
 
-        public decimal GetTotalPriceOfInventory();
+        decimal GetTotalPriceOfInventory();
     }
 }

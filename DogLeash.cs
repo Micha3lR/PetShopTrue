@@ -6,9 +6,12 @@ using System.Threading.Tasks;
 
 namespace PetShopTrue
 {
+    /// <summary>
+    /// Represents dog leash with specific parameters
+    /// </summary>
     internal class DogLeash : Product
     {
         public int LengthInches { get; set; }
-        public string Material { get; set; }
+        public String Material { get; set; }
     }
 }
